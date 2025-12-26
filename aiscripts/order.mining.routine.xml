@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<diff>
+    <add sel="/aiscript[@name='order.mining.routine']/init/do_if[@value='this.isplayerowned']/set_value[@name='$maxrange']" pos="after">
+        <!-- Add code to limit operational range -->
+        <do_if value="@this.assignedcontrolled.commander.isclass.station">
+            <set_value name="$idcode" exact="this.assignedcontrolled.commander.idcode" />
+            <do_if value="global.$v1024_logGuideStationRangeTable.$idcode?">
+                <!-- Value exists; right now assume is 0 range (i.e. sector) -->
+                <set_value name="$maxrange" exact="0" />
+            </do_if>
+        </do_if>
+    </add>
+</diff>
