@@ -4,7 +4,7 @@ Some QOL tools to adjust logistics efficiency in X4 Foundations.
 - Our GitHub repo: https://github.com/Vectorial1024/v1024_logistics_guidance
   - Detailed changelog: https://github.com/Vectorial1024/v1024_logistics_guidance/blob/master/CHANGELOG.md
   - Advanced users may make use of commit tags
-- Our EgoSoft Forums link: (WIP)
+- Our EgoSoft Forums link: https://forum.egosoft.com/viewtopic.php?t=473891
 - Our Steam Workshop link: (WIP)
 - Our Nexus Mods link: (WIP)
 
