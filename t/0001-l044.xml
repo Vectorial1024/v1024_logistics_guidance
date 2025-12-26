@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Specific language file: applies to English only -->
+<language id="44">
+    <page id="251024" title="LogGuideUI" descr="Text needed by this mod for GUI" voice="no">
+        <t id="1001">Logistics: Limit to sector range</t>
+        <!-- Limit range to sector -->
+        <t id="1002">Limit trading operational range of %s to only {20001, 201}.</t>
+        <t id="1101">Logistics: Restore galactic range</t>
+        <!-- Restores range to galaxy -->
+        <t id="1102">Restores trading operational range of %s to {20002, 1}.</t>
+    </page>
+</language>

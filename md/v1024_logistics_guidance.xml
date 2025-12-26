@@ -22,36 +22,33 @@
             <actions>
                 <set_value name="$target" exact="event.param.$object"/>
                 <do_if value="$target.isplayerowned and $target.isclass.station">
-                    <signal_cue_instantly
-                        cue="md.Interact_Menu_API.Add_Action"
-                        param = "table[
-                        $id         = 'logguide_stationrange0',
-                        $section    = 'interaction',
-                        $text       = 'Set Range 0',
-                        $mouseover  = 'Set Range 0 Target',
-                        $callback   = LogGuide_StationRange0,
-                        ]"/>
-                    <signal_cue_instantly
-                        cue="md.Interact_Menu_API.Add_Action"
-                        param = "table[
-                        $id         = 'logguide_stationrange999',
-                        $section    = 'interaction',
-                        $text       = 'Set Range 999',
-                        $mouseover  = 'Set Range 999 Target',
-                        $callback   = LogGuide_StationRange999,
-                        ]"/>
+                    <!-- Check whether we have settings for this station -->
+                    <set_value name="$idcode" exact="event.param.$object.idcode" />
+                    <do_if value="global.$v1024_logGuideStationRangeTable.$idcode?">
+                        <!-- Has entry; make it reset to vanilla -->
+                        <signal_cue_instantly
+                            cue="md.Interact_Menu_API.Add_Action"
+                            param = "table[
+                            $id         = 'logguide_stationrange999',
+                            $section    = 'interaction',
+                            $text       = {251024, 1101},
+                            $mouseover  = {251024, 1102}.[$target.name],
+                            $callback   = LogGuide_StationRange999,
+                            ]"/>
+                    </do_if>
+                    <do_else>
+                        <!-- No entry; allow limiting to 0 -->
+                        <signal_cue_instantly
+                            cue="md.Interact_Menu_API.Add_Action"
+                            param = "table[
+                            $id         = 'logguide_stationrange0',
+                            $section    = 'interaction',
+                            $text       = {251024, 1001},
+                            $mouseover  = {251024, 1002}.[$target.name],
+                            $callback   = LogGuide_StationRange0,
+                            ]"/>
+                    </do_else>
                 </do_if>
-            </actions>
-        </cue>
-        <cue name="LogGuide_StationRange999" instantiate="true" namespace="this">
-            <conditions>
-                <event_cue_signalled/>
-            </conditions>
-            <actions>
-                <!-- -->
-                <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <set_value name="global.$v1024_logGuideStationRangeTable.$idcode" exact="0" />
-                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Station range becomes 0.'" chance="0"/>
             </actions>
         </cue>
         <cue name="LogGuide_StationRange0" instantiate="true" namespace="this">
@@ -60,8 +57,30 @@
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
+                <set_value name="global.$v1024_logGuideStationRangeTable.$idcode" exact="0" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Station range becomes 0.'" chance="0"/>
+                <speak actor="player.computer" priority="-30">
+                    <!-- 
+                        In case for Betty, you can tell her to speak other supported lines by specifying the page number.
+                    -->
+                    <text line="145" comment="Control established." />
+                </speak>
+            </actions>
+        </cue>
+        <cue name="LogGuide_StationRange999" instantiate="true" namespace="this">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="$idcode" exact="event.param.$object.idcode" />
                 <remove_value name="global.$v1024_logGuideStationRangeTable.$idcode" />
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Station range becomes vanilla.'" chance="0"/>
+                <speak actor="player.computer" priority="-30">
+                    <!-- 
+                        In case for Betty, you can tell her to speak other supported lines by specifying the page number.
+                    -->
+                    <text line="134" comment="New command set." />
+                </speak>
             </actions>
         </cue>
     </cues>
