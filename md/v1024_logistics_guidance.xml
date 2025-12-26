@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mdscript name="V1024_LogisticsGuidance" description="Logistics guidance and trader efficiency tools">
+    <cues>
+        <cue name="LG_SettingUp" instantiate="true">
+            <conditions>
+                <event_cue_signalled cue="md.Setup.Start" />
+            </conditions>
+            <actions>
+                <!-- Stations all have a persistent IDCode ($station.idcode), so we can use that to lookup their "additional settings". -->
+                <!-- This IDCode is highly unlikely to be reused, so we should be good. -->
+                <!-- String idcode -> number -->
+                <do_if value="not (global.$v1024_logGuideStationRangeTable?)">
+                    <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: starting up.'" chance="0"/>
+                    <set_value name="global.$v1024_logGuideStationRangeTable" exact="table[]" />
+                </do_if>
+            </actions>
+        </cue>
+        <cue name="LG_AddInteractActions" instantiate="true">
+            <conditions>
+                <event_cue_signalled cue="md.Interact_Menu_API.Get_Actions" />
+            </conditions>
+            <actions>
+                <set_value name="$target" exact="event.param.$object"/>
+                <do_if value="$target.isplayerowned and $target.isclass.station">
+                    <signal_cue_instantly
+                        cue="md.Interact_Menu_API.Add_Action"
+                        param = "table[
+                        $id         = 'logguide_stationrange0',
+                        $section    = 'interaction',
+                        $text       = 'Set Range 0',
+                        $mouseover  = 'Set Range 0 Target',
+                        $callback   = LogGuide_StationRange0,
+                        ]"/>
+                    <signal_cue_instantly
+                        cue="md.Interact_Menu_API.Add_Action"
+                        param = "table[
+                        $id         = 'logguide_stationrange999',
+                        $section    = 'interaction',
+                        $text       = 'Set Range 999',
+                        $mouseover  = 'Set Range 999 Target',
+                        $callback   = LogGuide_StationRange999,
+                        ]"/>
+                </do_if>
+            </actions>
+        </cue>
+        <cue name="LogGuide_StationRange999" instantiate="true" namespace="this">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <!-- -->
+                <set_value name="$idcode" exact="event.param.$object.idcode" />
+                <set_value name="global.$v1024_logGuideStationRangeTable.$idcode" exact="0" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Station range becomes 0.'" chance="0"/>
+            </actions>
+        </cue>
+        <cue name="LogGuide_StationRange0" instantiate="true" namespace="this">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="$idcode" exact="event.param.$object.idcode" />
+                <remove_value name="global.$v1024_logGuideStationRangeTable.$idcode" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Station range becomes vanilla.'" chance="0"/>
+            </actions>
+        </cue>
+    </cues>
+</mdscript>
