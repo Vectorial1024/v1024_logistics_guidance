@@ -1,5 +1,5 @@
 # v1024_logistics_guidance
-Some QOL tools to adjust logistics efficiency in X4 Foundations.
+Some QOL tools to manually adjust logistics efficiency in X4 Foundations.
 
 - Our GitHub repo: https://github.com/Vectorial1024/v1024_logistics_guidance
   - Detailed changelog: https://github.com/Vectorial1024/v1024_logistics_guidance/blob/master/CHANGELOG.md
