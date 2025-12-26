@@ -36,6 +36,7 @@ This setup has the following benefits:
 - Easy to scale up:
   - Easy to apply to new stations
   - Easy to increase logistics throughput (just use more ships!)
+- Possible performance improvements due to limited ranges
 
 ... while also having the following drawbacks:
 - Not suitable for early game
