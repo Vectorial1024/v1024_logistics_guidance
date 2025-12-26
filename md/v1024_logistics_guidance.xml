@@ -44,7 +44,7 @@
                             $id         = 'logguide_stationrange0',
                             $section    = 'interaction',
                             $text       = {251024, 1001},
-                            $mouseover  = {251024, 1002}.[$target.name],
+                            $mouseover  = {251024, 1002}.[$target.name, $target.sector.knownname],
                             $callback   = LogGuide_StationRange0,
                             ]"/>
                     </do_else>
