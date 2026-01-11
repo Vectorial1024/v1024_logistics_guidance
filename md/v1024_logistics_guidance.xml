@@ -9,9 +9,15 @@
                 <!-- Stations all have a persistent IDCode ($station.idcode), so we can use that to lookup their "additional settings". -->
                 <!-- This IDCode is highly unlikely to be reused, so we should be good. -->
                 <!-- String idcode -> number -->
-                <do_if value="not (global.$v1024_logGuideStationRangeTable?)">
-                    <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: starting up.'" chance="0"/>
-                    <set_value name="global.$v1024_logGuideStationRangeTable" exact="table[]" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: starting up.'" chance="0"/>
+                <do_if value="not (global.$v1024_logGuideTradeRangeTable?)">
+                    <set_value name="global.$v1024_logGuideTradeRangeTable" exact="table[]" />
+                </do_if>
+                <do_if value="not (global.$v1024_logGuideMineRangeTable?)">
+                    <set_value name="global.$v1024_logGuideMineRangeTable" exact="table[]" />
+                </do_if>
+                <do_if value="not (global.$v1024_logGuideSalvageRangeTable?)">
+                    <set_value name="global.$v1024_logGuideSalvageRangeTable" exact="table[]" />
                 </do_if>
             </actions>
         </cue>
@@ -24,16 +30,20 @@
                 <do_if value="$target.isplayerowned and $target.isclass.station">
                     <!-- Check whether we have settings for this station -->
                     <set_value name="$idcode" exact="event.param.$object.idcode" />
-                    <do_if value="global.$v1024_logGuideStationRangeTable.$idcode?">
+
+                    <!-- We split by 3 categories to allow for flexible configuration -->
+
+                    <!-- Trading range -->
+                    <do_if value="global.$v1024_logGuideTradeRangeTable.$idcode?">
                         <!-- Has entry; make it reset to vanilla -->
                         <signal_cue_instantly
                             cue="md.Interact_Menu_API.Add_Action"
                             param = "table[
-                            $id         = 'logguide_stationrange999',
+                            $id         = 'logguide_traderange999',
                             $section    = 'interaction',
-                            $text       = {251024, 1101},
-                            $mouseover  = {251024, 1102}.[$target.name],
-                            $callback   = LogGuide_StationRange999,
+                            $text       = {251024, 2011},
+                            $mouseover  = {251024, 2012}.[$target.name],
+                            $callback   = LogGuide_TradeRange999,
                             ]"/>
                     </do_if>
                     <do_else>
@@ -41,24 +51,80 @@
                         <signal_cue_instantly
                             cue="md.Interact_Menu_API.Add_Action"
                             param = "table[
-                            $id         = 'logguide_stationrange0',
+                            $id         = 'logguide_traderange0',
                             $section    = 'interaction',
-                            $text       = {251024, 1001},
-                            $mouseover  = {251024, 1002}.[$target.name, $target.sector.knownname],
-                            $callback   = LogGuide_StationRange0,
+                            $text       = {251024, 2001},
+                            $mouseover  = {251024, 2002}.[$target.name, $target.sector.knownname],
+                            $callback   = LogGuide_TradeRange0,
+                            ]"/>
+                    </do_else>
+
+                    <!-- Mining range -->
+                    <do_if value="global.$v1024_logGuideMineRangeTable.$idcode?">
+                        <!-- Has entry; make it reset to vanilla -->
+                        <signal_cue_instantly
+                            cue="md.Interact_Menu_API.Add_Action"
+                            param = "table[
+                            $id         = 'logguide_minerange999',
+                            $section    = 'interaction',
+                            $text       = {251024, 2111},
+                            $mouseover  = {251024, 2112}.[$target.name],
+                            $callback   = LogGuide_MineRange999,
+                            ]"/>
+                    </do_if>
+                    <do_else>
+                        <!-- No entry; allow limiting to 0 -->
+                        <signal_cue_instantly
+                            cue="md.Interact_Menu_API.Add_Action"
+                            param = "table[
+                            $id         = 'logguide_minerange0',
+                            $section    = 'interaction',
+                            $text       = {251024, 2101},
+                            $mouseover  = {251024, 2102}.[$target.name, $target.sector.knownname],
+                            $callback   = LogGuide_MineRange0,
+                            ]"/>
+                    </do_else>
+
+                    <!-- Salvaging range -->
+                    <do_if value="global.$v1024_logGuideSalvageRangeTable.$idcode?">
+                        <!-- Has entry; make it reset to vanilla -->
+                        <signal_cue_instantly
+                            cue="md.Interact_Menu_API.Add_Action"
+                            param = "table[
+                            $id         = 'logguide_salvagerange999',
+                            $section    = 'interaction',
+                            $text       = {251024, 2211},
+                            $mouseover  = {251024, 2212}.[$target.name],
+                            $callback   = LogGuide_SalvageRange999,
+                            ]"/>
+                    </do_if>
+                    <do_else>
+                        <!-- No entry; allow limiting to 0 -->
+                        <signal_cue_instantly
+                            cue="md.Interact_Menu_API.Add_Action"
+                            param = "table[
+                            $id         = 'logguide_salvagerange0',
+                            $section    = 'interaction',
+                            $text       = {251024, 2201},
+                            $mouseover  = {251024, 2202}.[$target.name, $target.sector.knownname],
+                            $callback   = LogGuide_SalvageRange0,
                             ]"/>
                     </do_else>
                 </do_if>
             </actions>
         </cue>
-        <cue name="LogGuide_StationRange0" instantiate="true" namespace="this">
+
+        <!-- Event handlers -->
+
+        <!-- Trade range -->
+        <cue name="LogGuide_TradeRange0" instantiate="true" namespace="this">
             <conditions>
                 <event_cue_signalled/>
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <set_value name="global.$v1024_logGuideStationRangeTable.$idcode" exact="0" />
-                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Station range becomes 0.'" chance="0"/>
+                <set_value name="global.$v1024_logGuideTradeRangeTable.$idcode" exact="0" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Trade range becomes 0.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
                     <!-- 
                         In case for Betty, you can tell her to speak other supported lines by specifying the page number.
@@ -67,14 +133,82 @@
                 </speak>
             </actions>
         </cue>
-        <cue name="LogGuide_StationRange999" instantiate="true" namespace="this">
+        <cue name="LogGuide_TradeRange999" instantiate="true" namespace="this">
             <conditions>
                 <event_cue_signalled/>
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <remove_value name="global.$v1024_logGuideStationRangeTable.$idcode" />
-                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Station range becomes vanilla.'" chance="0"/>
+                <remove_value name="global.$v1024_logGuideTradeRangeTable.$idcode" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Trade range becomes vanilla.'" chance="0"/>
+                <speak actor="player.computer" priority="-30">
+                    <!-- 
+                        In case for Betty, you can tell her to speak other supported lines by specifying the page number.
+                    -->
+                    <text line="134" comment="New command set." />
+                </speak>
+            </actions>
+        </cue>
+        
+        <!-- Mine range -->
+        <cue name="LogGuide_MineRange0" instantiate="true" namespace="this">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="$idcode" exact="event.param.$object.idcode" />
+                <set_value name="global.$v1024_logGuideMineRangeTable.$idcode" exact="0" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Mine range becomes 0.'" chance="0"/>
+                <speak actor="player.computer" priority="-30">
+                    <!-- 
+                        In case for Betty, you can tell her to speak other supported lines by specifying the page number.
+                    -->
+                    <text line="145" comment="Control established." />
+                </speak>
+            </actions>
+        </cue>
+        <cue name="LogGuide_MineRange999" instantiate="true" namespace="this">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="$idcode" exact="event.param.$object.idcode" />
+                <remove_value name="global.$v1024_logGuideMineRangeTable.$idcode" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Mine range becomes vanilla.'" chance="0"/>
+                <speak actor="player.computer" priority="-30">
+                    <!-- 
+                        In case for Betty, you can tell her to speak other supported lines by specifying the page number.
+                    -->
+                    <text line="134" comment="New command set." />
+                </speak>
+            </actions>
+        </cue>
+        
+        <!-- Salvage range -->
+        <cue name="LogGuide_SalvageRange0" instantiate="true" namespace="this">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="$idcode" exact="event.param.$object.idcode" />
+                <set_value name="global.$v1024_logGuideSalvageRangeTable.$idcode" exact="0" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Salvage range becomes 0.'" chance="0"/>
+                <speak actor="player.computer" priority="-30">
+                    <!-- 
+                        In case for Betty, you can tell her to speak other supported lines by specifying the page number.
+                    -->
+                    <text line="145" comment="Control established." />
+                </speak>
+            </actions>
+        </cue>
+        <cue name="LogGuide_SalvageRange999" instantiate="true" namespace="this">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="$idcode" exact="event.param.$object.idcode" />
+                <remove_value name="global.$v1024_logGuideSalvageRangeTable.$idcode" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Salvage range becomes vanilla.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
                     <!-- 
                         In case for Betty, you can tell her to speak other supported lines by specifying the page number.
