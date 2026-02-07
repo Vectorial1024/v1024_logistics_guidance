@@ -28,7 +28,7 @@
             <actions>
                 <!-- Set up a custom actions group for improved organization -->
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: setting custom actions group.'" chance="0"/>
-                <raise_lua_event name="'Interact_Menu_API.Add_Custom_Actions_Group_Id'" param="'logistics_guidance_group'"/>
+                <raise_lua_event name="'Interact_Menu_API.Add_Custom_Actions_Group_Id'" param="'trade_range_group'"/>
                 <raise_lua_event name="'Interact_Menu_API.Add_Custom_Actions_Group_Text'" param="{251024, 101}"/>
             </actions>
         </cue>
@@ -43,7 +43,7 @@
                     <set_value name="$idcode" exact="event.param.$object.idcode" />
 
                     <!-- We split by 3 categories to allow for flexible configuration -->
-                    <set_value name="$menuSection" exact="'logistics_guidance_group'"/>
+                    <set_value name="$menuSection" exact="'trade_range_group'"/>
 
                     <!-- Trading range -->
                     <do_if value="global.$v1024_logGuideTradeRangeTable.$idcode?">
