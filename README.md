@@ -24,7 +24,7 @@ This mod modifies the vanilla trading, mining, and salvage scripts to let player
 
 These options are found in the Custom Actions section towards the bottom of the right-click menu of player-owned stations.
 
-Currently, this limit is indiscriminately applied to all three job types, and there are no granular controls, but we will first observe how the community feels about this mod.
+Currently, these range restrictions apply separately, so e.g. miners must stay at home while (export) traders can go outside.
 
 ## Motivation
 
