@@ -22,6 +22,8 @@ This mod modifies the vanilla trading, mining, and salvage scripts to let player
 - Limit mining range: miners may only mine minerals/gases within the same sector
 - Limit salvage range: salvagers may only use scraps/wrecks within the same sector
 
+These options are found in the Custom Actions section towards the bottom of the right-click menu of player-owned stations.
+
 Currently, this limit is indiscriminately applied to all three job types, and there are no granular controls, but we will first observe how the community feels about this mod.
 
 ## Motivation

@@ -21,6 +21,17 @@
                 </do_if>
             </actions>
         </cue>
+        <cue name="OnLuaInited" instantiate="true">
+            <conditions>
+                <event_ui_triggered screen="'Interact_Menu_API'" control="'reloaded'" />
+            </conditions>
+            <actions>
+                <!-- Set up a custom actions group for improved organization -->
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: setting custom actions group.'" chance="0"/>
+                <raise_lua_event name="'Interact_Menu_API.Add_Custom_Actions_Group_Id'" param="'logistics_guidance_group'"/>
+                <raise_lua_event name="'Interact_Menu_API.Add_Custom_Actions_Group_Text'" param="{251024, 101}"/>
+            </actions>
+        </cue>
         <cue name="LG_AddInteractActions" instantiate="true">
             <conditions>
                 <event_cue_signalled cue="md.Interact_Menu_API.Get_Actions" />
@@ -32,6 +43,7 @@
                     <set_value name="$idcode" exact="event.param.$object.idcode" />
 
                     <!-- We split by 3 categories to allow for flexible configuration -->
+                    <set_value name="$menuSection" exact="'logistics_guidance_group'"/>
 
                     <!-- Trading range -->
                     <do_if value="global.$v1024_logGuideTradeRangeTable.$idcode?">
@@ -40,7 +52,7 @@
                             cue="md.Interact_Menu_API.Add_Action"
                             param = "table[
                             $id         = 'logguide_traderange999',
-                            $section    = 'interaction',
+                            $section    = $menuSection,
                             $text       = {251024, 2011},
                             $mouseover  = {251024, 2012}.[$target.name],
                             $callback   = LogGuide_TradeRange999,
@@ -52,7 +64,7 @@
                             cue="md.Interact_Menu_API.Add_Action"
                             param = "table[
                             $id         = 'logguide_traderange0',
-                            $section    = 'interaction',
+                            $section    = $menuSection,
                             $text       = {251024, 2001},
                             $mouseover  = {251024, 2002}.[$target.name, $target.sector.knownname],
                             $callback   = LogGuide_TradeRange0,
@@ -66,7 +78,7 @@
                             cue="md.Interact_Menu_API.Add_Action"
                             param = "table[
                             $id         = 'logguide_minerange999',
-                            $section    = 'interaction',
+                            $section    = $menuSection,
                             $text       = {251024, 2111},
                             $mouseover  = {251024, 2112}.[$target.name],
                             $callback   = LogGuide_MineRange999,
@@ -78,7 +90,7 @@
                             cue="md.Interact_Menu_API.Add_Action"
                             param = "table[
                             $id         = 'logguide_minerange0',
-                            $section    = 'interaction',
+                            $section    = $menuSection,
                             $text       = {251024, 2101},
                             $mouseover  = {251024, 2102}.[$target.name, $target.sector.knownname],
                             $callback   = LogGuide_MineRange0,
@@ -92,7 +104,7 @@
                             cue="md.Interact_Menu_API.Add_Action"
                             param = "table[
                             $id         = 'logguide_salvagerange999',
-                            $section    = 'interaction',
+                            $section    = $menuSection,
                             $text       = {251024, 2211},
                             $mouseover  = {251024, 2212}.[$target.name],
                             $callback   = LogGuide_SalvageRange999,
@@ -104,7 +116,7 @@
                             cue="md.Interact_Menu_API.Add_Action"
                             param = "table[
                             $id         = 'logguide_salvagerange0',
-                            $section    = 'interaction',
+                            $section    = $menuSection,
                             $text       = {251024, 2201},
                             $mouseover  = {251024, 2202}.[$target.name, $target.sector.knownname],
                             $callback   = LogGuide_SalvageRange0,

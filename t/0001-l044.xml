@@ -2,6 +2,8 @@
 <!-- Specific language file: applies to English only -->
 <language id="44">
     <page id="251024" title="LogGuideUI" descr="Text needed by this mod for GUI" voice="no">
+        <t id="101">Logistics Guidance</t>
+
         <t id="1001">Logistics: Limit to sector range</t>
         <!-- Limit range to sector -->
         <t id="1002">Limit trading operational range of %s to only %s.</t>
