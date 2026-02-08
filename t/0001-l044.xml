@@ -7,37 +7,38 @@
         <t id="101">Logistics: {1001, 4212}</t>
 
         <!--
-        Note: we need to mention "superhighway gate" because "sector" range ignores superhighways
-        "Sector" here is ambiguous between actual sectors (aka "small hexes") and "big hexes" (no approved nomenclature).
+        Note: we reviewed the nomenclature, and the "big hex" is called "cluster".
         -->
 
-        <t id="1001">Logistics: Limit to sector range</t>
-        <!-- Limit range to sector + superhighway gate -->
-        <t id="1002">Limit trading operational range of %s to only %s and anywhere reachable by a {1001, 9810}.</t>
+        <!-- Self-note: {1041, 10094} has text for "range" -->
+
+        <t id="1001">Logistics: Limit to cluster range</t>
+        <!-- Limit range to cluster -->
+        <t id="1002">Limit trading operational range of %s to only %s.</t>
         <t id="1101">Logistics: Restore galactic range</t>
         <!-- Restores range to galaxy -->
         <t id="1102">Restores trading operational range of %s to {20002, 1}.</t>
 
         <!-- Trading -->
-        <t id="2001">{1038, 50}: Limit to sector range</t>
-        <!-- Limit range to sector -->
-        <t id="2002">{1038, 50}: limit range of %s to only %s and anywhere reachable by a {1001, 9810}.</t>
+        <t id="2001">{1038, 50}: Limit to cluster range</t>
+        <!-- Limit range to cluster -->
+        <t id="2002">{1038, 50}: limit range of %s to only %s.</t>
         <t id="2011">{1038, 50}: Restore galactic range</t>
         <!-- Restores range to galaxy -->
         <t id="2012">{1038, 50}: restore trading operational range of %s to {20002, 1}.</t>
 
         <!-- Mining -->
-        <t id="2101">{1038, 60}: Limit to sector range</t>
-        <!-- Limit range to sector -->
-        <t id="2102">{1038, 60}: limit range of %s to only %s and anywhere reachable by a {1001, 9810}.</t>
+        <t id="2101">{1038, 60}: Limit to cluster range</t>
+        <!-- Limit range to cluster -->
+        <t id="2102">{1038, 60}: limit range of %s to only %s.</t>
         <t id="2111">{1038, 60}: Restore galactic range</t>
         <!-- Restores range to galaxy -->
         <t id="2112">{1038, 60}: restore trading operational range of %s to {20002, 1}.</t>
 
         <!-- Salvaging -->
-        <t id="2201">{1038, 80}: Limit to sector range</t>
-        <!-- Limit range to sector -->
-        <t id="2202">{1038, 80}: limit range of %s to only %s and anywhere reachable by a {1001, 9810}.</t>
+        <t id="2201">{1038, 80}: Limit to cluster range</t>
+        <!-- Limit range to cluster -->
+        <t id="2202">{1038, 80}: limit range of %s to only %s.</t>
         <t id="2211">{1038, 80}: Restore galactic range</t>
         <!-- Restores range to galaxy -->
         <t id="2212">{1038, 80}: restore trading operational range of %s to {20002, 1}.</t>

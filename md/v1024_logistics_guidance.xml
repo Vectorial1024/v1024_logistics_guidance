@@ -66,7 +66,7 @@
                             $id         = 'logguide_traderange0',
                             $section    = $menuSection,
                             $text       = {251024, 2001},
-                            $mouseover  = {251024, 2002}.[$target.name, $target.sector.knownname],
+                            $mouseover  = {251024, 2002}.[$target.name, $target.cluster.knownname],
                             $callback   = LogGuide_TradeRange0,
                             ]"/>
                     </do_else>
@@ -92,7 +92,7 @@
                             $id         = 'logguide_minerange0',
                             $section    = $menuSection,
                             $text       = {251024, 2101},
-                            $mouseover  = {251024, 2102}.[$target.name, $target.sector.knownname],
+                            $mouseover  = {251024, 2102}.[$target.name, $target.cluster.knownname],
                             $callback   = LogGuide_MineRange0,
                             ]"/>
                     </do_else>
@@ -118,7 +118,7 @@
                             $id         = 'logguide_salvagerange0',
                             $section    = $menuSection,
                             $text       = {251024, 2201},
-                            $mouseover  = {251024, 2202}.[$target.name, $target.sector.knownname],
+                            $mouseover  = {251024, 2202}.[$target.name, $target.cluster.knownname],
                             $callback   = LogGuide_SalvageRange0,
                             ]"/>
                     </do_else>
