@@ -91,30 +91,41 @@
                         ]"/>
                     
                     <!-- Mining range -->
-                    <do_if value="global.$v1024_logGuideMineRangeTable.$idcode?">
-                        <!-- Has entry; make it reset to vanilla -->
-                        <signal_cue_instantly
-                            cue="md.Interact_Menu_API.Add_Action"
-                            param = "table[
-                            $id         = 'logguide_minerange999',
-                            $section    = $menuSection,
-                            $text       = {251024, 2111},
-                            $mouseover  = {251024, 2112}.[$target.name],
-                            $callback   = LogGuide_MineRange999,
-                            ]"/>
-                    </do_if>
-                    <do_else>
-                        <!-- No entry; allow limiting to 0 -->
-                        <signal_cue_instantly
-                            cue="md.Interact_Menu_API.Add_Action"
-                            param = "table[
-                            $id         = 'logguide_minerange0',
-                            $section    = $menuSection,
-                            $text       = {251024, 2101},
-                            $mouseover  = {251024, 2102}.[$target.name, $target.cluster.knownname],
-                            $callback   = LogGuide_MineRange0,
-                            ]"/>
-                    </do_else>
+                    <set_value name="$allowMineSectorRange" exact="@global.$v1024_logGuideMineRangeTable.$idcode != 'sector'" />
+                    <set_value name="$allowMineClusterRange" exact="@global.$v1024_logGuideMineRangeTable.$idcode != 'cluster' and $hasMultipleSectors" />
+                    <set_value name="$allowMineDefaultRange" exact="global.$v1024_logGuideMineRangeTable.$idcode?" />
+                    <signal_cue_instantly
+                        cue="md.Interact_Menu_API.Add_Action"
+                        param = "table[
+                        $id         = 'logguide_minerange_sector',
+                        $section    = $menuSection,
+                        $text       = {251024, 2101},
+                        $mouseover  = {251024, 2102}.[$target.name, $target.sector.knownname],
+                        $callback   = LogGuide_TradeRange_Sector,
+                        $active     = $allowTradeSectorRange,
+                        ]"/>
+                    <signal_cue_instantly
+                        cue="md.Interact_Menu_API.Add_Action"
+                        param = "table[
+                        $id         = 'logguide_minerange_cluster',
+                        $section    = $menuSection,
+                        $text       = {251024, 2111},
+                        $mouseover  = {251024, 2112}.[$target.name, $target.cluster.knownname],
+                        $callback   = LogGuide_TradeRange_Cluster,
+                        $active     = $allowTradeClusterRange,
+                        ]"
+                        chance="if $hasMultipleSectors then 100 else 0"
+                        comment="Hide button if sector == cluster to reduce general confusion" />
+                    <signal_cue_instantly
+                        cue="md.Interact_Menu_API.Add_Action"
+                        param = "table[
+                        $id         = 'logguide_minerange_reset',
+                        $section    = $menuSection,
+                        $text       = {251024, 2121},
+                        $mouseover  = {251024, 2122}.[$target.name],
+                        $callback   = LogGuide_TradeRange_Reset,
+                        $active     = $allowTradeDefaultRange,
+                        ]"/>
 
                     <!-- Salvaging range -->
                     <do_if value="global.$v1024_logGuideSalvageRangeTable.$idcode?">
@@ -200,23 +211,41 @@
         </cue>
         
         <!-- Mine range -->
-        <cue name="LogGuide_MineRange0" instantiate="true" namespace="this">
+        <cue name="LogGuide_MineRange_Sector" instantiate="true" namespace="this">
             <conditions>
                 <event_cue_signalled/>
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <set_value name="global.$v1024_logGuideMineRangeTable.$idcode" exact="0" />
-                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Mine range becomes 0.'" chance="0"/>
+                <set_value name="global.$v1024_logGuideMineRangeTable.$idcode" exact="'sector'" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Mine range becomes sector.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
-                    <!-- 
+                    <!--
                         In case for Betty, you can tell her to speak other supported lines by specifying the page number.
                     -->
+                    <text line="134" comment="New command set." />
                     <text line="145" comment="Control established." />
                 </speak>
             </actions>
         </cue>
-        <cue name="LogGuide_MineRange999" instantiate="true" namespace="this">
+        <cue name="LogGuide_MineRange_Cluster" instantiate="true" namespace="this">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="$idcode" exact="event.param.$object.idcode" />
+                <set_value name="global.$v1024_logGuideMineRangeTable.$idcode" exact="'cluster'" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Mine range becomes cluster.'" chance="0"/>
+                <speak actor="player.computer" priority="-30">
+                    <!--
+                        In case for Betty, you can tell her to speak other supported lines by specifying the page number.
+                    -->
+                    <text line="134" comment="New command set." />
+                    <text line="145" comment="Control established." />
+                </speak>
+            </actions>
+        </cue>
+        <cue name="LogGuide_MineRange_Reset" instantiate="true" namespace="this">
             <conditions>
                 <event_cue_signalled/>
             </conditions>
@@ -225,10 +254,10 @@
                 <remove_value name="global.$v1024_logGuideMineRangeTable.$idcode" />
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Mine range becomes vanilla.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
-                    <!-- 
+                    <!--
                         In case for Betty, you can tell her to speak other supported lines by specifying the page number.
                     -->
-                    <text line="134" comment="New command set." />
+                    <text line="135" comment="Cancelled." />
                 </speak>
             </actions>
         </cue>
