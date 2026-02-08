@@ -43,34 +43,53 @@
                     <set_value name="$idcode" exact="event.param.$object.idcode" />
 
                     <!-- We split by 3 categories to allow for flexible configuration -->
+                    <!-- All categories will have: 
+                      - Limit to sector
+                      - Limit to cluster (available if cluster has multiple sectors)
+                      - Reset to vanilla 
+                    -->
                     <set_value name="$menuSection" exact="'trade_range_group'"/>
+                    <!-- Check whether the cluster has only 1 sector; hide some redundant options if so. -->
+                    <find_sector name="$tempSectors" space="$target.cluster" multiple="true"/>
+                    <set_value name="$hasMultipleSectors" exact="$tempSectors.count gt 1" />
 
                     <!-- Trading range -->
-                    <do_if value="global.$v1024_logGuideTradeRangeTable.$idcode?">
-                        <!-- Has entry; make it reset to vanilla -->
-                        <signal_cue_instantly
-                            cue="md.Interact_Menu_API.Add_Action"
-                            param = "table[
-                            $id         = 'logguide_traderange999',
-                            $section    = $menuSection,
-                            $text       = {251024, 2011},
-                            $mouseover  = {251024, 2012}.[$target.name],
-                            $callback   = LogGuide_TradeRange999,
-                            ]"/>
-                    </do_if>
-                    <do_else>
-                        <!-- No entry; allow limiting to 0 -->
-                        <signal_cue_instantly
-                            cue="md.Interact_Menu_API.Add_Action"
-                            param = "table[
-                            $id         = 'logguide_traderange0',
-                            $section    = $menuSection,
-                            $text       = {251024, 2001},
-                            $mouseover  = {251024, 2002}.[$target.name, $target.cluster.knownname],
-                            $callback   = LogGuide_TradeRange0,
-                            ]"/>
-                    </do_else>
-
+                    <set_value name="$allowTradeSectorRange" exact="@global.$v1024_logGuideTradeRangeTable.$idcode != 'sector'" />
+                    <set_value name="$allowTradeClusterRange" exact="@global.$v1024_logGuideTradeRangeTable.$idcode != 'cluster' and $hasMultipleSectors" />
+                    <set_value name="$allowTradeDefaultRange" exact="global.$v1024_logGuideTradeRangeTable.$idcode?" />
+                    <signal_cue_instantly
+                        cue="md.Interact_Menu_API.Add_Action"
+                        param = "table[
+                        $id         = 'logguide_traderange_sector',
+                        $section    = $menuSection,
+                        $text       = {251024, 2001},
+                        $mouseover  = {251024, 2002}.[$target.name, $target.sector.knownname],
+                        $callback   = LogGuide_TradeRange_Sector,
+                        $active     = $allowTradeSectorRange,
+                        ]"/>
+                    <signal_cue_instantly
+                        cue="md.Interact_Menu_API.Add_Action"
+                        param = "table[
+                        $id         = 'logguide_traderange_cluster',
+                        $section    = $menuSection,
+                        $text       = {251024, 2011},
+                        $mouseover  = {251024, 2012}.[$target.name, $target.cluster.knownname],
+                        $callback   = LogGuide_TradeRange_Cluster,
+                        $active     = $allowTradeClusterRange,
+                        ]"
+                        chance="if $hasMultipleSectors then 100 else 0"
+                        comment="Hide button if sector == cluster to reduce general confusion" />
+                    <signal_cue_instantly
+                        cue="md.Interact_Menu_API.Add_Action"
+                        param = "table[
+                        $id         = 'logguide_traderange_reset',
+                        $section    = $menuSection,
+                        $text       = {251024, 2021},
+                        $mouseover  = {251024, 2022}.[$target.name],
+                        $callback   = LogGuide_TradeRange_Reset,
+                        $active     = $allowTradeDefaultRange,
+                        ]"/>
+                    
                     <!-- Mining range -->
                     <do_if value="global.$v1024_logGuideMineRangeTable.$idcode?">
                         <!-- Has entry; make it reset to vanilla -->
@@ -129,23 +148,41 @@
         <!-- Event handlers -->
 
         <!-- Trade range -->
-        <cue name="LogGuide_TradeRange0" instantiate="true" namespace="this">
+        <cue name="LogGuide_TradeRange_Sector" instantiate="true" namespace="this">
             <conditions>
                 <event_cue_signalled/>
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <set_value name="global.$v1024_logGuideTradeRangeTable.$idcode" exact="0" />
-                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Trade range becomes 0.'" chance="0"/>
+                <set_value name="global.$v1024_logGuideTradeRangeTable.$idcode" exact="'sector'" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Trade range becomes sector.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
-                    <!-- 
+                    <!--
                         In case for Betty, you can tell her to speak other supported lines by specifying the page number.
                     -->
+                    <text line="134" comment="New command set." />
                     <text line="145" comment="Control established." />
                 </speak>
             </actions>
         </cue>
-        <cue name="LogGuide_TradeRange999" instantiate="true" namespace="this">
+        <cue name="LogGuide_TradeRange_Cluster" instantiate="true" namespace="this">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="$idcode" exact="event.param.$object.idcode" />
+                <set_value name="global.$v1024_logGuideTradeRangeTable.$idcode" exact="'cluster'" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Trade range becomes cluster.'" chance="0"/>
+                <speak actor="player.computer" priority="-30">
+                    <!--
+                        In case for Betty, you can tell her to speak other supported lines by specifying the page number.
+                    -->
+                    <text line="134" comment="New command set." />
+                    <text line="145" comment="Control established." />
+                </speak>
+            </actions>
+        </cue>
+        <cue name="LogGuide_TradeRange_Reset" instantiate="true" namespace="this">
             <conditions>
                 <event_cue_signalled/>
             </conditions>
@@ -154,10 +191,10 @@
                 <remove_value name="global.$v1024_logGuideTradeRangeTable.$idcode" />
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Trade range becomes vanilla.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
-                    <!-- 
+                    <!--
                         In case for Betty, you can tell her to speak other supported lines by specifying the page number.
                     -->
-                    <text line="134" comment="New command set." />
+                    <text line="135" comment="Cancelled." />
                 </speak>
             </actions>
         </cue>

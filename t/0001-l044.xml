@@ -20,12 +20,16 @@
         <t id="1102">Restores trading operational range of %s to {20002, 1}.</t>
 
         <!-- Trading -->
-        <t id="2001">{1038, 50}: Limit to cluster range</t>
+        <!-- Range (Trading): Limit to Sector -->
+        <t id="2001">{1041, 10094} \({1038, 50}\): Limit to {20001, 201}</t>
+        <!-- Limit range to sector -->
+        <t id="2002">Limit trading range of %s to only the sector %s.</t>
+        <t id="2011">{1041, 10094} \({1038, 50}\): Limit to Cluster</t>
         <!-- Limit range to cluster -->
-        <t id="2002">{1038, 50}: limit range of %s to only %s.</t>
-        <t id="2011">{1038, 50}: Restore galactic range</t>
+        <t id="2012">Limit trading range of %s to only the cluster %s.</t>
+        <t id="2021">{1041, 10094} \({1038, 50}\): Restore galactic range</t>
         <!-- Restores range to galaxy -->
-        <t id="2012">{1038, 50}: restore trading operational range of %s to {20002, 1}.</t>
+        <t id="2022">Restore trading range of %s to {20002, 1} \(uses vanilla settings\).</t>
 
         <!-- Mining -->
         <t id="2101">{1038, 60}: Limit to cluster range</t>
