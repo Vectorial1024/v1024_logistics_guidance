@@ -6,7 +6,7 @@
         <do_if value="@this.assignedcontrolled.commander.isclass.station">
             <set_value name="$idcode" exact="this.assignedcontrolled.commander.idcode" />
             <do_if value="global.$v1024_logGuideSalvageRangeTable.$idcode?">
-                <!-- Value exists; right now assume is 0 range (i.e. sector) -->
+                <!-- Value exists; right now assume is 0 range (i.e. cluster) -->
                 <set_value name="$maxrange" exact="0" />
             </do_if>
         </do_if>
