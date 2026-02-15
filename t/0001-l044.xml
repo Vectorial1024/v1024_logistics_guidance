@@ -44,11 +44,15 @@
         <t id="2122">Restore mining range of %s to {20002, 1} \(uses vanilla settings\).</t>
 
         <!-- Salvaging -->
-        <t id="2201">{1038, 80}: Limit to cluster range</t>
+        <!-- Range (Salvaging): Limit to Sector -->
+        <t id="2201">{1041, 10094} \({1038, 80}\): Limit to {20001, 201}</t>
+        <!-- Limit range to sector -->
+        <t id="2202">Limit salvaging range of %s to only the sector %s.</t>
+        <t id="2211">{1041, 10094} \({1038, 80}\): Limit to Cluster</t>
         <!-- Limit range to cluster -->
-        <t id="2202">{1038, 80}: limit range of %s to only %s.</t>
-        <t id="2211">{1038, 80}: Restore galactic range</t>
+        <t id="2212">Limit mining range of %s to only the cluster %s.</t>
+        <t id="2221">{1041, 10094} \({1038, 80}\): Restore galactic range</t>
         <!-- Restores range to galaxy -->
-        <t id="2212">{1038, 80}: restore trading operational range of %s to {20002, 1}.</t>
+        <t id="2222">Restore salvaging range of %s to {20002, 1} \(uses vanilla settings\).</t>
     </page>
 </language>

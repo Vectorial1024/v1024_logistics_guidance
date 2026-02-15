@@ -128,30 +128,41 @@
                         ]"/>
 
                     <!-- Salvaging range -->
-                    <do_if value="global.$v1024_logGuideSalvageRangeTable.$idcode?">
-                        <!-- Has entry; make it reset to vanilla -->
-                        <signal_cue_instantly
-                            cue="md.Interact_Menu_API.Add_Action"
-                            param = "table[
-                            $id         = 'logguide_salvagerange999',
-                            $section    = $menuSection,
-                            $text       = {251024, 2211},
-                            $mouseover  = {251024, 2212}.[$target.name],
-                            $callback   = LogGuide_SalvageRange999,
-                            ]"/>
-                    </do_if>
-                    <do_else>
-                        <!-- No entry; allow limiting to 0 -->
-                        <signal_cue_instantly
-                            cue="md.Interact_Menu_API.Add_Action"
-                            param = "table[
-                            $id         = 'logguide_salvagerange0',
-                            $section    = $menuSection,
-                            $text       = {251024, 2201},
-                            $mouseover  = {251024, 2202}.[$target.name, $target.cluster.knownname],
-                            $callback   = LogGuide_SalvageRange0,
-                            ]"/>
-                    </do_else>
+                    <set_value name="$allowSalvageSectorRange" exact="@global.$v1024_logGuideSalvageRangeTable.$idcode != 'sector'" />
+                    <set_value name="$allowSalvageClusterRange" exact="@global.$v1024_logGuideSalvageRangeTable.$idcode != 'cluster' and $hasMultipleSectors" />
+                    <set_value name="$allowSalvageDefaultRange" exact="global.$v1024_logGuideSalvageRangeTable.$idcode?" />
+                    <signal_cue_instantly
+                        cue="md.Interact_Menu_API.Add_Action"
+                        param = "table[
+                        $id         = 'logguide_salvagerange_sector',
+                        $section    = $menuSection,
+                        $text       = {251024, 2201},
+                        $mouseover  = {251024, 2202}.[$target.name, $target.sector.knownname],
+                        $callback   = LogGuide_SalvageRange_Sector,
+                        $active     = $allowSalvageSectorRange,
+                        ]"/>
+                    <signal_cue_instantly
+                        cue="md.Interact_Menu_API.Add_Action"
+                        param = "table[
+                        $id         = 'logguide_salvagerange_cluster',
+                        $section    = $menuSection,
+                        $text       = {251024, 2211},
+                        $mouseover  = {251024, 2212}.[$target.name, $target.cluster.knownname],
+                        $callback   = LogGuide_SalvageRange_Cluster,
+                        $active     = $allowSalvageClusterRange,
+                        ]"
+                        chance="if $hasMultipleSectors then 100 else 0"
+                        comment="Hide button if sector == cluster to reduce general confusion" />
+                    <signal_cue_instantly
+                        cue="md.Interact_Menu_API.Add_Action"
+                        param = "table[
+                        $id         = 'logguide_salvagerange_reset',
+                        $section    = $menuSection,
+                        $text       = {251024, 2221},
+                        $mouseover  = {251024, 2222}.[$target.name],
+                        $callback   = LogGuide_SalvageRange_Reset,
+                        $active     = $allowSalvageDefaultRange,
+                        ]"/>
                 </do_if>
             </actions>
         </cue>
@@ -263,23 +274,41 @@
         </cue>
         
         <!-- Salvage range -->
-        <cue name="LogGuide_SalvageRange0" instantiate="true" namespace="this">
+        <cue name="LogGuide_SalvageRange_Sector" instantiate="true" namespace="this">
             <conditions>
                 <event_cue_signalled/>
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <set_value name="global.$v1024_logGuideSalvageRangeTable.$idcode" exact="0" />
-                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Salvage range becomes 0.'" chance="0"/>
+                <set_value name="global.$v1024_logGuideSalvageRangeTable.$idcode" exact="'sector'" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Salvage range becomes sector.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
                     <!-- 
                         In case for Betty, you can tell her to speak other supported lines by specifying the page number.
                     -->
+                    <text line="134" comment="New command set." />
                     <text line="145" comment="Control established." />
                 </speak>
             </actions>
         </cue>
-        <cue name="LogGuide_SalvageRange999" instantiate="true" namespace="this">
+        <cue name="LogGuide_SalvageRange_Cluster" instantiate="true" namespace="this">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="$idcode" exact="event.param.$object.idcode" />
+                <set_value name="global.$v1024_logGuideSalvageRangeTable.$idcode" exact="'cluster'" />
+                <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Salvage range becomes cluster.'" chance="0"/>
+                <speak actor="player.computer" priority="-30">
+                    <!-- 
+                        In case for Betty, you can tell her to speak other supported lines by specifying the page number.
+                    -->
+                    <text line="134" comment="New command set." />
+                    <text line="145" comment="Control established." />
+                </speak>
+            </actions>
+        </cue>
+        <cue name="LogGuide_SalvageRange_Reset" instantiate="true" namespace="this">
             <conditions>
                 <event_cue_signalled/>
             </conditions>
@@ -291,7 +320,7 @@
                     <!-- 
                         In case for Betty, you can tell her to speak other supported lines by specifying the page number.
                     -->
-                    <text line="134" comment="New command set." />
+                    <text line="135" comment="Cancelled." />
                 </speak>
             </actions>
         </cue>
