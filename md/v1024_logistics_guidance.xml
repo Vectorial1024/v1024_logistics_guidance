@@ -101,8 +101,8 @@
                         $section    = $menuSection,
                         $text       = {251024, 2101},
                         $mouseover  = {251024, 2102}.[$target.name, $target.sector.knownname],
-                        $callback   = LogGuide_TradeRange_Sector,
-                        $active     = $allowTradeSectorRange,
+                        $callback   = LogGuide_MineRange_Sector,
+                        $active     = $allowMineSectorRange,
                         ]"/>
                     <signal_cue_instantly
                         cue="md.Interact_Menu_API.Add_Action"
@@ -111,8 +111,8 @@
                         $section    = $menuSection,
                         $text       = {251024, 2111},
                         $mouseover  = {251024, 2112}.[$target.name, $target.cluster.knownname],
-                        $callback   = LogGuide_TradeRange_Cluster,
-                        $active     = $allowTradeClusterRange,
+                        $callback   = LogGuide_MineRange_Cluster,
+                        $active     = $allowMineClusterRange,
                         ]"
                         chance="if $hasMultipleSectors then 100 else 0"
                         comment="Hide button if sector == cluster to reduce general confusion" />
@@ -123,8 +123,8 @@
                         $section    = $menuSection,
                         $text       = {251024, 2121},
                         $mouseover  = {251024, 2122}.[$target.name],
-                        $callback   = LogGuide_TradeRange_Reset,
-                        $active     = $allowTradeDefaultRange,
+                        $callback   = LogGuide_MineRange_Reset,
+                        $active     = $allowMineDefaultRange,
                         ]"/>
 
                     <!-- Salvaging range -->
