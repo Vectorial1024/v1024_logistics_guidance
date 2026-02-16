@@ -26,6 +26,12 @@ These options are found in the Custom Actions section towards the bottom of the 
 
 Currently, these range restrictions apply separately, so e.g. miners must stay at home while (export) traders can go outside.
 
+There are two kinds of range limit:
+- Sector range: limits activities to be within the hexagon that the station is at
+- Cluster range: limits activities to be within the *large* hexagon that the station is at
+  - Example of a multi-sector cluster: Grand Exchange
+  - Option is hidden if cluster has only 1 sector
+
 ## Motivation
 
 One big inspiration of this mod came from X: Rebirth. There, the trading operational range of stations can be switched between the Zone level, the Sector level, and (with Comms Relay upgrade) the System level. This allows the following hypothetical setup:
