@@ -54,9 +54,9 @@
                     <set_value name="$hasMultipleSectors" exact="$tempSectors.count gt 1" />
 
                     <!-- Trading range -->
-                    <set_value name="$allowTradeSectorRange" exact="@global.$v1024_logGuideTradeRangeTable.$idcode != 'sector'" />
-                    <set_value name="$allowTradeClusterRange" exact="@global.$v1024_logGuideTradeRangeTable.$idcode != 'cluster' and $hasMultipleSectors" />
-                    <set_value name="$allowTradeDefaultRange" exact="global.$v1024_logGuideTradeRangeTable.$idcode?" />
+                    <set_value name="$allowTradeSectorRange" exact="@global.$v1024_logGuideTradeRangeTable.{$idcode} != 'sector'" />
+                    <set_value name="$allowTradeClusterRange" exact="@global.$v1024_logGuideTradeRangeTable.{$idcode} != 'cluster' and $hasMultipleSectors" />
+                    <set_value name="$allowTradeDefaultRange" exact="global.$v1024_logGuideTradeRangeTable.{$idcode}?" />
                     <signal_cue_instantly
                         cue="md.Interact_Menu_API.Add_Action"
                         param = "table[
@@ -91,9 +91,9 @@
                         ]"/>
                     
                     <!-- Mining range -->
-                    <set_value name="$allowMineSectorRange" exact="@global.$v1024_logGuideMineRangeTable.$idcode != 'sector'" />
-                    <set_value name="$allowMineClusterRange" exact="@global.$v1024_logGuideMineRangeTable.$idcode != 'cluster' and $hasMultipleSectors" />
-                    <set_value name="$allowMineDefaultRange" exact="global.$v1024_logGuideMineRangeTable.$idcode?" />
+                    <set_value name="$allowMineSectorRange" exact="@global.$v1024_logGuideMineRangeTable.{$idcode} != 'sector'" />
+                    <set_value name="$allowMineClusterRange" exact="@global.$v1024_logGuideMineRangeTable.{$idcode} != 'cluster' and $hasMultipleSectors" />
+                    <set_value name="$allowMineDefaultRange" exact="global.$v1024_logGuideMineRangeTable.{$idcode}?" />
                     <signal_cue_instantly
                         cue="md.Interact_Menu_API.Add_Action"
                         param = "table[
@@ -128,9 +128,9 @@
                         ]"/>
 
                     <!-- Salvaging range -->
-                    <set_value name="$allowSalvageSectorRange" exact="@global.$v1024_logGuideSalvageRangeTable.$idcode != 'sector'" />
-                    <set_value name="$allowSalvageClusterRange" exact="@global.$v1024_logGuideSalvageRangeTable.$idcode != 'cluster' and $hasMultipleSectors" />
-                    <set_value name="$allowSalvageDefaultRange" exact="global.$v1024_logGuideSalvageRangeTable.$idcode?" />
+                    <set_value name="$allowSalvageSectorRange" exact="@global.$v1024_logGuideSalvageRangeTable.{$idcode} != 'sector'" />
+                    <set_value name="$allowSalvageClusterRange" exact="@global.$v1024_logGuideSalvageRangeTable.{$idcode} != 'cluster' and $hasMultipleSectors" />
+                    <set_value name="$allowSalvageDefaultRange" exact="global.$v1024_logGuideSalvageRangeTable.{$idcode}?" />
                     <signal_cue_instantly
                         cue="md.Interact_Menu_API.Add_Action"
                         param = "table[
@@ -176,7 +176,7 @@
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <set_value name="global.$v1024_logGuideTradeRangeTable.$idcode" exact="'sector'" />
+                <set_value name="global.$v1024_logGuideTradeRangeTable.{$idcode}" exact="'sector'" />
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Trade range becomes sector.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
                     <!--
@@ -193,7 +193,7 @@
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <set_value name="global.$v1024_logGuideTradeRangeTable.$idcode" exact="'cluster'" />
+                <set_value name="global.$v1024_logGuideTradeRangeTable.{$idcode}" exact="'cluster'" />
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Trade range becomes cluster.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
                     <!--
@@ -210,7 +210,7 @@
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <remove_value name="global.$v1024_logGuideTradeRangeTable.$idcode" />
+                <remove_value name="global.$v1024_logGuideTradeRangeTable.{$idcode}" />
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Trade range becomes vanilla.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
                     <!--
@@ -228,7 +228,7 @@
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <set_value name="global.$v1024_logGuideMineRangeTable.$idcode" exact="'sector'" />
+                <set_value name="global.$v1024_logGuideMineRangeTable.{$idcode}" exact="'sector'" />
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Mine range becomes sector.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
                     <!--
@@ -245,7 +245,7 @@
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <set_value name="global.$v1024_logGuideMineRangeTable.$idcode" exact="'cluster'" />
+                <set_value name="global.$v1024_logGuideMineRangeTable.{$idcode}" exact="'cluster'" />
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Mine range becomes cluster.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
                     <!--
@@ -262,7 +262,7 @@
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <remove_value name="global.$v1024_logGuideMineRangeTable.$idcode" />
+                <remove_value name="global.$v1024_logGuideMineRangeTable.{$idcode}" />
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Mine range becomes vanilla.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
                     <!--
@@ -280,7 +280,7 @@
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <set_value name="global.$v1024_logGuideSalvageRangeTable.$idcode" exact="'sector'" />
+                <set_value name="global.$v1024_logGuideSalvageRangeTable.{$idcode}" exact="'sector'" />
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Salvage range becomes sector.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
                     <!-- 
@@ -297,7 +297,7 @@
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <set_value name="global.$v1024_logGuideSalvageRangeTable.$idcode" exact="'cluster'" />
+                <set_value name="global.$v1024_logGuideSalvageRangeTable.{$idcode}" exact="'cluster'" />
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Salvage range becomes cluster.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
                     <!-- 
@@ -314,7 +314,7 @@
             </conditions>
             <actions>
                 <set_value name="$idcode" exact="event.param.$object.idcode" />
-                <remove_value name="global.$v1024_logGuideSalvageRangeTable.$idcode" />
+                <remove_value name="global.$v1024_logGuideSalvageRangeTable.{$idcode}" />
                 <show_help position="1" duration="6s" custom="'V1024 Logistics Guidance: Salvage range becomes vanilla.'" chance="0"/>
                 <speak actor="player.computer" priority="-30">
                     <!-- 
