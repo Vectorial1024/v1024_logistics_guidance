@@ -17,7 +17,7 @@
         </do_if>
     </add>
 
-    <add sel="/aiscript[@name='order.salvage.routine']/attention/actions/run_script[@result='$table_gatedistances']">
+    <add sel="/aiscript[@name='order.salvage.routine']/attention/actions/do_if/run_script[@result='$table_gatedistances']">
         <!-- Restrict to sector if we specified it -->
         <!-- This is actually a lib.find.sectors.inrange -->
         <param name="usesectordistance" value="if $limitToSector? then true else false" />
