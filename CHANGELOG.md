@@ -1,7 +1,12 @@
 # Change log
 This is a detailed changelog of Logistics Guidance.
 
-## Version 1.01 (2026-02-17)
+## Version 1.02 (2026-02-18)
+Bugfix update.
+- Fixed salvage range control not distinguishing between sector/cluster ranges.
+  - The technical reason is a bad patch path.
+
+## Version 1.01 (2026-02-18)
 Bugfix update.
 - Fixed range control settings being applied to all player-owned stations at once.
   - The technical reason is mistaking `.{$idcode}` (correct) with `.$idcode` (wrong).
