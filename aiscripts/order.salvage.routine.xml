@@ -5,11 +5,11 @@
         <!-- Add code to limit operational range -->
         <remove_value name="$limitToSector" comment="Remove flag from previous run" />
         <do_if value="@this.assignedcontrolled.commander.isclass.station and this.assignedcontrolled.commander.isplayerowned">
-            <set_value name="$idcode" exact="this.assignedcontrolled.commander.idcode" />
-            <do_if value="global.$v1024_logGuideSalvageRangeTable.{$idcode}?">
+            <set_value name="$target" exact="this.assignedcontrolled.commander" />
+            <do_if value="global.$v1024_logGuideSalvageRangeTable.{$target}?">
                 <!-- Value exists; right now assume is 0 range (i.e. cluster) -->
                 <set_value name="$maxrange" exact="0" />
-                <do_if value="global.$v1024_logGuideTradeRangeTable.{$idcode} == 'sector'">
+                <do_if value="global.$v1024_logGuideTradeRangeTable.{$target} == 'sector'">
                     <!-- We want the sector -->
                     <set_value name="$limitToSector" exact="true" />
                 </do_if>
