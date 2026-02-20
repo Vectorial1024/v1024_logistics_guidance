@@ -1,6 +1,11 @@
 # Change log
 This is a detailed changelog of Logistics Guidance.
 
+## Version 1.03 (2026-02-20)
+Bugfix update.
+- Fixed range control settings not persisting at all.
+  - The technical reason is that it is difficult to make use of dynamic string keys for the lookup tables.
+
 ## Version 1.02 (2026-02-18)
 Bugfix update.
 - Fixed salvage range control not distinguishing between sector/cluster ranges.
