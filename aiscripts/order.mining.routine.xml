@@ -9,7 +9,7 @@
             <do_if value="global.$v1024_logGuideMineRangeTable.{$target}?">
                 <!-- Value exists; right now assume is 0 range (i.e. cluster) -->
                 <set_value name="$maxrange" exact="0" />
-                <do_if value="global.$v1024_logGuideTradeRangeTable.{$target} == 'sector'">
+                <do_if value="global.$v1024_logGuideMineRangeTable.{$target} == 'sector'">
                     <!-- We want the sector -->
                     <set_value name="$limitToSector" exact="true" />
                 </do_if>
