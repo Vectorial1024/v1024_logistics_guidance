@@ -5,6 +5,7 @@
         <!-- UI group names -->
         <!-- Trading operational range -->
         <t id="101">Logistics: {1001, 4212}</t>
+        <t id="102">Logistics: Trading direction</t>
 
         <!--
         Note: we reviewed the nomenclature, and the "big hex" is called "cluster".
@@ -54,5 +55,14 @@
         <t id="2221">{1041, 10094} \({1038, 80}\): Restore galactic range</t>
         <!-- Restores range to galaxy -->
         <t id="2222">Restore salvaging range of %s to {20002, 1} \(uses vanilla settings\).</t>
+
+        <!-- Trade direction control -->
+        <!-- The wording is too custom, no prebuilt text is usable. -->
+        <t id="3001">Trading direction: Limit to import</t>
+        <t id="3002">Limit trading surordinates of %s to only buy from others.</t>
+        <t id="3011">Trading direction: Limit to export</t>
+        <t id="3012">Limit trading subordinates of %s to only sell to others.</t>
+        <t id="3021">Trading direction: Restore bidirectionality</t>
+        <t id="3022">Permit trading subordinates of %s to freely choose to buy or sell \(uses vanilla settings\).</t>
     </page>
 </language>

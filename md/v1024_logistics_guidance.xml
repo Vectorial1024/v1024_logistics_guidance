@@ -34,7 +34,7 @@
                 <raise_lua_event name="'Interact_Menu_API.Add_Custom_Actions_Group_Id'" param="'trade_range_group'"/>
                 <raise_lua_event name="'Interact_Menu_API.Add_Custom_Actions_Group_Text'" param="{251024, 101}"/>
                 <raise_lua_event name="'Interact_Menu_API.Add_Custom_Actions_Group_Id'" param="'trade_direction_group'"/>
-                <raise_lua_event name="'Interact_Menu_API.Add_Custom_Actions_Group_Text'" param="{251024, 101}"/>
+                <raise_lua_event name="'Interact_Menu_API.Add_Custom_Actions_Group_Text'" param="{251024, 102}"/>
             </actions>
         </cue>
         <cue name="LG_AddInteractActions" instantiate="true">
@@ -180,8 +180,8 @@
                         param = "table[
                         $id         = 'logguide_tradedir_import',
                         $section    = $menuSectionTradeDir,
-                        $text       = {251024, 2201},
-                        $mouseover  = {251024, 2202}.[$target.name, $target.sector.knownname],
+                        $text       = {251024, 3001},
+                        $mouseover  = {251024, 3002}.[$target.name, $target.sector.knownname],
                         $callback   = LogGuide_TradeDirection_Import,
                         $active     = $allowTradeImportOnly,
                         ]"/>
@@ -190,8 +190,8 @@
                         param = "table[
                         $id         = 'logguide_tradedir_export',
                         $section    = $menuSectionTradeDir,
-                        $text       = {251024, 2211},
-                        $mouseover  = {251024, 2212}.[$target.name, $target.cluster.knownname],
+                        $text       = {251024, 3011},
+                        $mouseover  = {251024, 3012}.[$target.name, $target.cluster.knownname],
                         $callback   = LogGuide_TradeDirection_Export,
                         $active     = $allowTradeExportOnly,
                         ]"/>
@@ -200,8 +200,8 @@
                         param = "table[
                         $id         = 'logguide_tradedir_reset',
                         $section    = $menuSectionTradeDir,
-                        $text       = {251024, 2221},
-                        $mouseover  = {251024, 2222}.[$target.name],
+                        $text       = {251024, 3021},
+                        $mouseover  = {251024, 3022}.[$target.name],
                         $callback   = LogGuide_TradeDirection_Reset,
                         $active     = $allowTradeDefaultDirection,
                         ]"/>
