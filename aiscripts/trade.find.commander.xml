@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<diff>
+    <!-- If we have specified the trade direction, then tell the trade script to ignore certain trade directions. -->
+    <!-- Ideally this does not interact too badly with the other mod Logistics Optimization. -->
+
+    <add sel="/aiscript[@name='trade.find.commander']/attention/actions/label[@name='sell']" pos="before">
+        <do_if value="@global.$v1024_logGuideTradeRangeTable.{$target} == 'import'">
+            <!-- We are about to sell, but we are supposed to be importing only. -->
+            <resume label="buy" />
+        </do_if>
+    </add>
+
+    <add sel="/aiscript[@name='trade.find.commander']/attention/actions/include_interrupt_actions[@ref='FindCommanderStation'][2]" pos="after">
+        <!-- Add label to allow us to jump to "after all trade calculations have completed". -->
+        <label name="v1024_lg_closingup" />
+    </add>
+
+    <add sel="/aiscript[@name='trade.find.commander']/attention/actions/label[@name='buy']" pos="before">
+        <do_if value="@global.$v1024_logGuideTradeRangeTable.{$target} == 'export'">
+            <!-- We are about to buy, but we are supposed to be exporting only. -->
+            <resume label="v1024_lg_closingup" />
+        </do_if>
+    </add>
+</diff>
