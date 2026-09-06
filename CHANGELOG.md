@@ -1,6 +1,12 @@
 # Change log
 This is a detailed changelog of Logistics Guidance.
 
+## Version 1.04 (2026-09-06)
+Feature update.
+- Station trade direction can be limited by the player (see README for more details)
+  - Import only; or Export only
+  - This may improve logistics efficiency in some cases
+
 ## Version 1.03 (2026-02-20)
 Bugfix update.
 - Fixed range control settings not persisting at all.
