@@ -83,3 +83,4 @@ But perhaps this is what players want, to really control station import/export i
 - Refineries sell products between each other, and also back to the warehouses
 - Advanced factories all trade with the warehouse for resources
 - Functioning intake/outflow warehouses to balance ware levels with NPC stations
+- Active pushing of products (still checks prices; use auto-price!)
